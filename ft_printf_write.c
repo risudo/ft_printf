@@ -1,5 +1,52 @@
 #include "ft_printf.h"
 
+void	write_unsigned(t_fmt *fmt, va_list *ap)
+{
+	unsigned int	nb;
+
+	nb = (unsigned int)va_arg(*ap, int);
+	fmt->base = 10;
+	culc_space_unsigned(fmt, &nb);//unsigned intいけてる？
+	culc_zero(fmt);
+	fmt->put_len = fmt->cnt_space + fmt->cnt_zero + fmt->arg_len;
+	if (fmt->flag != '-')
+		put_space(fmt);
+	put_zero(fmt);
+	ft_putnbr_unsigned(nb);
+	if (fmt->flag == '-')
+		put_space(fmt);
+}
+
+void	culc_space_unsigned(t_fmt *fmt, unsigned int *nb)
+{
+	int	digit;
+	unsigned int	nb_cpy;
+
+	digit = 0;
+	nb_cpy = *nb;
+	while (nb_cpy)
+	{
+		nb_cpy /= fmt->base;
+		digit++;
+	}
+	fmt->arg_len = digit;
+	if (fmt->precision > digit)
+		digit = fmt->precision;
+	if (fmt->width > digit)
+		fmt->cnt_space = fmt->width - digit;
+}
+
+void	ft_putnbr_unsigned(unsigned int nb)
+{
+	if (nb > 9)
+	{
+		ft_putnbr_unsigned(nb / 10);
+		ft_putnbr_unsigned(nb % 10);
+	}
+	else
+		ft_putchar_fd(nb + '0', 1);
+}
+
 //? unsigned char にキャスト？
 void	write_char(t_fmt *fmt, va_list *ap)
 {

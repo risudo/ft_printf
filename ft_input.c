@@ -72,4 +72,5 @@ void	init_fmt(t_fmt *fmt)
 	fmt->cnt_zero = 0;
 	fmt->put_len = 0;
 	fmt->minus_sign = 0;
+	fmt->base = 0;
 }

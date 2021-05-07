@@ -1,22 +1,20 @@
 #include "ft_printf.h"
-
-
-
-void	culc_space_nb(t_fmt *fmt, int *nb)
+//TODO: baseを求めて10進数でも16進数でも同じ関数を使う
+void	culc_space_nb(t_fmt *fmt, long *nb)
 {
-	int	digit;
-	int	nb_cpy;
+	int		digit;
+	long	nb_cpy;
 
-	nb_cpy = *nb;
 	digit = 0;
 	if (*nb < 0)
 	{
 		fmt->minus_sign = 1;
 		*nb *= -1;
 	}
+	nb_cpy = *nb;
 	while (nb_cpy)
 	{
-		nb_cpy /= 10;
+		nb_cpy /= fmt->base;
 		digit++;
 	}
 	fmt->arg_len = digit;
@@ -61,14 +59,9 @@ void	put_zero(t_fmt *fmt)
 	}
 }
 
-void	ft_putnbr_fd(int n, int fd)
+void	ft_putnbr_fd(long n, int fd)
 {
-	if (n == -2147483648)
-	{
-		ft_putstr_fd("-2147483648", fd);
-		return ;
-	}
-	else if (n < 0)
+	if (n < 0)
 	{
 		ft_putchar_fd('-', fd);
 		n *= -1;
