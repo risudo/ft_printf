@@ -6,6 +6,8 @@ void	culc_space_nb(t_fmt *fmt, long *nb)
 	unsigned long long	nb_cpy;
 
 	digit = 0;
+	if (*nb == 0)
+		digit = 1;
 	if (*nb < 0)
 	{
 		fmt->minus_sign = 1;

@@ -14,18 +14,18 @@ void	write_pointer(t_fmt *fmt, va_list *ap)
 	write_hex_ans(fmt, p);
 }
 
-void	write_hex(t_fmt *fmt, va_list *ap, int case_letter)
+void	write_hex(t_fmt *fmt, va_list *ap)
 {
-	long	nb;
+	unsigned long long	nb;
 
 	fmt->base = 16;
-	nb = (long)va_arg(*ap, int);
-	if (case_letter)
-		fmt->case_letter = 1;
-	else
-		fmt->case_letter = 0;
-	culc_space_nb(fmt, &nb);
+	nb = (unsigned long long)va_arg(*ap, unsigned int);
+	culc_space_unsigned(fmt, &nb);
+	if (fmt->minus_sign && fmt->cnt_space)
+		fmt->cnt_space--;
 	culc_zero(fmt);
+	if (nb == 0 && fmt->cnt_space && fmt->precision == 0)
+		fmt->cnt_space++;
 	write_hex_ans(fmt, (unsigned long long)nb);
 }
 
@@ -35,7 +35,7 @@ void	get_base(t_fmt *fmt)
 	char	c;
 
 	i = -1;
-	if (fmt->case_letter == 1)
+	if (fmt->type == 'X')
 		c = 'A';
 	else
 		c = 'a';
@@ -54,8 +54,7 @@ void	get_base(t_fmt *fmt)
 void	write_hex_ans(t_fmt *fmt, unsigned long long nb)
 {
 	get_base(fmt);
-	if (fmt->minus_sign && fmt->cnt_space && fmt->cnt_zero)
-		fmt->cnt_space--;
+
 	fmt->put_len = fmt->cnt_space + fmt->cnt_zero + fmt->arg_len;
 	if (fmt->flag != '-')
 		put_space(fmt);

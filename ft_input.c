@@ -31,7 +31,10 @@ int	width_precision_input(const char *format, int *i, va_list *ap)
 		return (0);
 	}
 	if (format[*i] == '-')
+	{
 		minus = -1;
+		(*i)++;
+	}
 	while (format[*i] >= '0' && format[*i] <= '9')
 	{
 		nb *= 10;

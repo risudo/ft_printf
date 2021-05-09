@@ -15,9 +15,9 @@ int	write_arg(t_fmt *fmt, va_list *ap)
 	else if (fmt->type == '%')
 		write_percent(fmt);
 	else if (fmt->type == 'x')
-		write_hex(fmt, ap, 0);
+		write_hex(fmt, ap);
 	else if (fmt->type == 'X')
-		write_hex(fmt, ap, 1);
+		write_hex(fmt, ap);
 	else if (fmt->type == 'p')
 		write_pointer(fmt, ap);
 	return (fmt->put_len);

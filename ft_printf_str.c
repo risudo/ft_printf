@@ -1,7 +1,6 @@
 #include "ft_printf.h"
 //TODO :精度0のとき0出力しない
 
-
 void	write_str(t_fmt *fmt, va_list *ap)
 {
 	char	*str;

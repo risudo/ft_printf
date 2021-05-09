@@ -30,7 +30,7 @@ void	write_pointer(t_fmt *fmt, va_list *ap);
 void	ft_putnbr_unsigned(unsigned long long nb);
 void	culc_space_unsigned(t_fmt *fmt, unsigned long long *nb);
 void	write_percent(t_fmt *fmt);
-void	write_hex(t_fmt *fmt, va_list *ap, int case_letter);
+void	write_hex(t_fmt *fmt, va_list *ap);
 void	write_hex_ans(t_fmt *fmt, unsigned long long nb);
 int		ft_input_fmt(const char *format, int *i, va_list *ap);
 int		write_arg(t_fmt *fmt, va_list *ap);
