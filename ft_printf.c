@@ -1,28 +1,6 @@
 #include "ft_printf.h"
 
-void	write_int(t_fmt *fmt, va_list *ap)
-{
-	long nb;
 
-	nb = (long)va_arg(*ap, int);
-	fmt->base = 10;
-	culc_space_nb(fmt, &nb);
-	culc_zero(fmt);
-	if (fmt->minus_sign && fmt->cnt_space && fmt->cnt_zero)
-		fmt->cnt_space--;
-	fmt->put_len = fmt->cnt_space + fmt->cnt_zero + fmt->arg_len;
-	if (fmt->flag != '-')
-		put_space(fmt);
-	if (fmt->minus_sign)
-	{
-		write(1, "-", 1);
-		fmt->put_len++;
-	}
-	put_zero(fmt);
-	ft_putnbr_fd((long)nb, 1);//! 精度０の時０出力しない
-	if (fmt->flag == '-')
-		put_space(fmt);
-}
 
 int	write_arg(t_fmt *fmt, va_list *ap)
 {
@@ -40,8 +18,8 @@ int	write_arg(t_fmt *fmt, va_list *ap)
 		write_hex(fmt, ap, 0);
 	else if (fmt->type == 'X')
 		write_hex(fmt, ap, 1);
-	// else if (fmt->type == 'p')
-	// 	write_pointer(fmt, ap);
+	else if (fmt->type == 'p')
+		write_pointer(fmt, ap);
 	return (fmt->put_len);
 }
 

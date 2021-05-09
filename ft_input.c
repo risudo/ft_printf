@@ -73,4 +73,5 @@ void	init_fmt(t_fmt *fmt)
 	fmt->put_len = 0;
 	fmt->minus_sign = 0;
 	fmt->base = 0;
+	fmt->pointer_sign = 0;
 }
