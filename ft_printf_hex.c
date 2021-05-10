@@ -10,6 +10,8 @@ void	write_pointer(t_fmt *fmt, va_list *ap)
 	fmt->case_letter = 0;
 	culc_space_unsigned(fmt, &p);
 	fmt->cnt_space -= 2;
+	if (fmt->cnt_space < 0)
+		fmt->cnt_space = 0;
 	culc_zero(fmt);
 	write_hex_ans(fmt, p);
 }
@@ -23,9 +25,9 @@ void	write_hex(t_fmt *fmt, va_list *ap)
 	culc_space_unsigned(fmt, &nb);
 	if (fmt->minus_sign && fmt->cnt_space)
 		fmt->cnt_space--;
-	culc_zero(fmt);
-	if (nb == 0 && fmt->cnt_space && fmt->precision == 0)
+	if (nb == 0 && fmt->width && fmt->precision == 0)
 		fmt->cnt_space++;
+	culc_zero(fmt);
 	write_hex_ans(fmt, (unsigned long long)nb);
 }
 
@@ -54,20 +56,18 @@ void	get_base(t_fmt *fmt)
 void	write_hex_ans(t_fmt *fmt, unsigned long long nb)
 {
 	get_base(fmt);
-
-	fmt->put_len = fmt->cnt_space + fmt->cnt_zero + fmt->arg_len;
+	fmt->put_len += fmt->cnt_space + fmt->cnt_zero + fmt->arg_len;
 	if (fmt->flag != '-')
 		put_space(fmt);
 	if (fmt->minus_sign)
-	{
-		write(1, "-", 1);
-		fmt->put_len++;
-	}
+		fmt->put_len += write(1, "-", 1);
 	if (fmt->pointer_sign)
-		write(1, "0x", 2);
+		fmt->put_len += write(1, "0x", 2);
 	put_zero(fmt);
 	if (!(fmt->precision == 0 && nb == 0))
 		ft_put_nbr_hex(nb, fmt);
+	else
+		fmt->put_len--;
 	if (fmt->flag == '-')
 		put_space(fmt);
 }

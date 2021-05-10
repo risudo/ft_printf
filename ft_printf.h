@@ -4,7 +4,6 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <limits.h>
-#include <stdio.h>
 
 typedef struct s_fmt
 {
@@ -38,7 +37,6 @@ void	write_int(t_fmt *fmt, va_list *ap);
 char	ft_strchr_return(char *set, char c);
 int		width_precision_input(const char *format, int *i, va_list *ap);
 char	*ft_strchr(const char *s, int c);
-char	*change_asterisk(const char *format, int *i, va_list *ap, t_fmt *cvt_fmt);
 char	flag_input(const char *format, int *i);
 int		write_arg(t_fmt *fmt, va_list *ap);
 void	culc_space_nb(t_fmt *fmt, long *nb);

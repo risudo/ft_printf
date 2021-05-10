@@ -13,7 +13,10 @@
 void	d_test(void)
 {
 
-	F("1: %*.*d\n", 5, -3, 42);
+	F("1: %*.*d\n", -1, 0, 0);
+	F("1: %*.*d\n", -4, 0, 0);
+	F("1: %*.*d\n", -04, 0, 0);
+	F("1: %0*.*d\n", -4, 0, 0);
 	F("2: %*.*d\n", -5, -3, 42);
 	F("3: %05d\n", 42);
 	F("4: %05.d\n", 42);
@@ -53,9 +56,10 @@ void	s_test()
 
 void	c_test()
 {
-	F("4: %c\n", 0);
+	// F("4: %c\n", 0);
 	F("19: %10c\n", 'a');
-	F("20: %010c\n", 'a');
+	F("c: %010c\n", 'a');
+	F("c: %-010c\n", 'a');
 
 }
 
@@ -73,7 +77,7 @@ void	per_test()
 void	x_test()
 {
 	F("6: %x\n", -1045);
-	F("%10x\n", INT_MIN);
+	F("%x\n", INT_MIN);
 	F("%10.5x\n", 42);
 	F("x: %.x\n", 0);
 }
@@ -86,31 +90,17 @@ void	X_test()
 	F("%010X", 10982734);
 }
 
-void	p_test()
-{
-	int	*p;
-	int d = 100;
-	p = &d;
-	// F("%p\n", p);
-	// F("%30p\n", p);
-	// F("%030p\n", p);
-	// F("%-30p\n", p);
-	// F("%30.40p\n", p);
-	// ft_printf("%10.20p\n", p);
-	// printf("%10.20p\n", p);
-
-}
 
 int	main()
 {
 
-	// d_test();
-	// u_test();
-	// s_test();
-	// c_test();
-	// per_test();
+	d_test();
+	u_test();
+	s_test();
+	c_test();
+	per_test();
 	x_test();
-	// X_test();
-	// p_test();
+	X_test();
+	// ft_printf("%-010c", 'a');
 	return (0);
 }

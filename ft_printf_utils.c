@@ -2,7 +2,7 @@
 
 void	culc_space_nb(t_fmt *fmt, long *nb)
 {
-	int		digit;
+	int					digit;
 	unsigned long long	nb_cpy;
 
 	digit = 0;
@@ -28,7 +28,7 @@ void	culc_space_nb(t_fmt *fmt, long *nb)
 
 void	culc_zero(t_fmt *fmt)
 {
-	if (fmt->precision == -1 && fmt->flag == '0')
+	if (fmt->precision < 0 && fmt->flag == '0')
 	{
 		fmt->cnt_zero = fmt->cnt_space;
 		fmt->cnt_space = 0;

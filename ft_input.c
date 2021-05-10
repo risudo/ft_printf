@@ -23,13 +23,11 @@ int	width_precision_input(const char *format, int *i, va_list *ap)
 	if (format[*i] == '*')
 	{
 		(*i)++;
-		nb = (int)va_arg(*ap, int);
-		return (nb);
+		return ((int)va_arg(*ap, int));
 	}
-	else if (format[(*i) - 1] == '.' && ft_strchr_return("cspdiuxX%", format[*i]))
-	{
+	else if (format[(*i) - 1] == '.'
+		&& ft_strchr_return("cspdiuxX%", format[*i]))
 		return (0);
-	}
 	if (format[*i] == '-')
 	{
 		minus = -1;
@@ -49,19 +47,13 @@ char	flag_input(const char *format, int *i)
 	char	ret;
 
 	ret = 'a';
-	if (format[*i] == '0')
+	while (format[*i] == '0' || format[*i] == '-')
 	{
-		while (format[*i] == '0')
-			(*i)++;
-		return ('0');
+		if (ret != '-')
+			ret = format[*i];
+		(*i)++;
 	}
-	if (format[*i] == '-')
-	{
-		while (format[*i] == '-')
-			(*i)++;
-		return ('-');
-	}
-	return ('a');
+	return (ret);
 }
 
 void	init_fmt(t_fmt *fmt)

@@ -2,27 +2,26 @@
 
 void	write_int(t_fmt *fmt, va_list *ap)
 {
-	long nb;
+	long	nb;
 
 	nb = (long)va_arg(*ap, int);
 	fmt->base = 10;
 	culc_space_nb(fmt, &nb);
 	if (fmt->minus_sign && fmt->cnt_space)
 		fmt->cnt_space--;
-	culc_zero(fmt);
-	if (nb == 0 && fmt->cnt_space && fmt->precision == 0)
+	if (nb == 0 && fmt->precision == 0 && fmt->width != 0)
 		fmt->cnt_space++;
+	culc_zero(fmt);
 	fmt->put_len = fmt->cnt_space + fmt->cnt_zero + fmt->arg_len;
 	if (fmt->flag != '-')
 		put_space(fmt);
 	if (fmt->minus_sign)
-	{
-		write(1, "-", 1);
-		fmt->put_len++;
-	}
+		fmt->put_len += write(1, "-", 1);
 	put_zero(fmt);
 	if (!(fmt->precision == 0 && nb == 0))
-		ft_putnbr_unsigned((unsigned long long)nb);//! 精度０の時０出力しない
+		ft_putnbr_unsigned((unsigned long long)nb);
+	else
+		fmt->put_len--;
 	if (fmt->flag == '-')
 		put_space(fmt);
 }
@@ -33,23 +32,25 @@ void	write_unsigned(t_fmt *fmt, va_list *ap)
 
 	nb = (unsigned long long)va_arg(*ap, unsigned int);
 	fmt->base = 10;
-	culc_space_unsigned(fmt, &nb);//unsigned intいけてる？
-	culc_zero(fmt);
-	if (nb == 0 && fmt->cnt_space && fmt->precision == 0)
+	culc_space_unsigned(fmt, &nb);
+	if (nb == 0 && fmt->precision == 0 && fmt->width != 0)
 		fmt->cnt_space++;
+	culc_zero(fmt);
 	fmt->put_len = fmt->cnt_space + fmt->cnt_zero + fmt->arg_len;
 	if (fmt->flag != '-')
 		put_space(fmt);
 	put_zero(fmt);
 	if (!(fmt->precision == 0 && nb == 0))
 		ft_putnbr_unsigned(nb);
+	else
+		fmt->put_len--;
 	if (fmt->flag == '-')
 		put_space(fmt);
 }
 
 void	culc_space_unsigned(t_fmt *fmt, unsigned long long *nb)
 {
-	int	digit;
+	int					digit;
 	unsigned long long	nb_cpy;
 
 	digit = 0;

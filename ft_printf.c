@@ -1,7 +1,5 @@
 #include "ft_printf.h"
 
-
-
 int	write_arg(t_fmt *fmt, va_list *ap)
 {
 	if (fmt->type == 'd' || fmt->type == 'i')
@@ -23,14 +21,12 @@ int	write_arg(t_fmt *fmt, va_list *ap)
 	return (fmt->put_len);
 }
 
-
 int	ft_input_fmt(const char *format, int *i, va_list *ap)
 {
 	t_fmt	fmt;
 
 	(*i)++;
 	init_fmt(&fmt);
-
 	fmt.flag = flag_input(format, i);
 	fmt.width = width_precision_input(format, i, ap);
 	if (fmt.width < 0)
