@@ -1,5 +1,5 @@
 # ft_printf
-This project to re-cord the `libc`'s `printf` function.  
+This project is to re-cord the `libc`'s `printf` function.  
 Managing below conversions:
 - `c`
 - `s`
